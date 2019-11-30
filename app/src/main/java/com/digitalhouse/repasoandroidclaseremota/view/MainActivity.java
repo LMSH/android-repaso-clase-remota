@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.digitalhouse.repasoandroidclaseremota.R;
 import com.digitalhouse.repasoandroidclaseremota.controller.PeliculaController;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.EscuchadorCelda {
 
     private RecyclerView recyclerView;
     private List<Pelicula> peliculas;
@@ -58,9 +59,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        recyclerViewAdapter = new RecyclerViewAdapter(peliculas);
+        recyclerViewAdapter = new RecyclerViewAdapter(peliculas,this);
 
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setHasFixedSize(true);
+    }
+
+    @Override
+    public void eligieronUnaCelda(Pelicula peliculita) {
+        Toast.makeText(this, peliculita.getTituloPelicula(), Toast.LENGTH_SHORT).show();
     }
 }

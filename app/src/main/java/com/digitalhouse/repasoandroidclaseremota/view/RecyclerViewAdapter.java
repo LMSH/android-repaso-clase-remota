@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,9 +20,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static final String IMAGEN_BASE_URL = "http://image.tmdb.org/t/p/original";
     private List<Pelicula> peliculaList;
+    private EscuchadorCelda escuchadorCelda;
 
-    public RecyclerViewAdapter(List<Pelicula> peliculaList) {
+    public RecyclerViewAdapter(List<Pelicula> peliculaList, EscuchadorCelda escuchadorCelda) {
         this.peliculaList = peliculaList;
+        this.escuchadorCelda = escuchadorCelda;
     }
 
     public void actualizarLista(List<Pelicula> peliculaList){
@@ -64,11 +67,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView textViewTituloPelicula;
         private TextView textViewSinopsisPelicula;
 
-        public PeliculasViewHolder(@NonNull View itemView) {
+        public PeliculasViewHolder(@NonNull final View itemView) {
             super(itemView);
             imageViewCelda = itemView.findViewById(R.id.imagenPelicula);
             textViewTituloPelicula = itemView.findViewById(R.id.tituloPelicula);
             textViewSinopsisPelicula = itemView.findViewById(R.id.sinopsisPelicula);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Pelicula pelicula = peliculaList.get(getAdapterPosition());
+                    escuchadorCelda.eligieronUnaCelda(pelicula);
+                }
+            });
         }
 
         public void bindPelicula(Pelicula unaPelicula){
@@ -79,5 +90,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             textViewTituloPelicula.setText(unaPelicula.getTituloPelicula());
             textViewSinopsisPelicula.setText(unaPelicula.getSinopsisPelicula());
         }
+    }
+
+    public interface EscuchadorCelda{
+        public void eligieronUnaCelda(Pelicula laPeliculaSeleccionada);
     }
 }
