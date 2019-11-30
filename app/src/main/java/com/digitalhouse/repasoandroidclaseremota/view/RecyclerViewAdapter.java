@@ -1,4 +1,4 @@
-package com.digitalhouse.repasoandroidclaseremota;
+package com.digitalhouse.repasoandroidclaseremota.view;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.digitalhouse.repasoandroidclaseremota.R;
+import com.digitalhouse.repasoandroidclaseremota.model.pojo.Pelicula;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.digitalhouse.repasoandroidclaseremota;
+package com.digitalhouse.repasoandroidclaseremota.model.pojo;
 
 public class Pelicula {
 

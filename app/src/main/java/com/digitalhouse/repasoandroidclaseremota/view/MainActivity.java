@@ -1,10 +1,13 @@
-package com.digitalhouse.repasoandroidclaseremota;
+package com.digitalhouse.repasoandroidclaseremota.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+
+import com.digitalhouse.repasoandroidclaseremota.R;
+import com.digitalhouse.repasoandroidclaseremota.model.pojo.Pelicula;
 
 import java.util.ArrayList;
 import java.util.Arrays;
