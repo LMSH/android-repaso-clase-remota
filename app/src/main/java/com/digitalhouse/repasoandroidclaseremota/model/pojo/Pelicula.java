@@ -1,9 +1,14 @@
 package com.digitalhouse.repasoandroidclaseremota.model.pojo;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Pelicula {
 
+    @SerializedName("poster_path")
     private String posterPeliculaUrl;
+    @SerializedName("title")
     private String tituloPelicula;
+    @SerializedName("overview")
     private String sinopsisPelicula;
 
     public Pelicula(String posterPeliculaUrl, String tituloPelicula, String sinopsisPelicula) {

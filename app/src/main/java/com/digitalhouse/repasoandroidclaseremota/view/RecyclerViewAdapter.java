@@ -17,10 +17,16 @@ import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.PeliculasViewHolder> {
 
+    public static final String IMAGEN_BASE_URL = "http://image.tmdb.org/t/p/original";
     private List<Pelicula> peliculaList;
 
     public RecyclerViewAdapter(List<Pelicula> peliculaList) {
         this.peliculaList = peliculaList;
+    }
+
+    public void actualizarLista(List<Pelicula> peliculaList){
+        this.peliculaList = peliculaList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -68,7 +74,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public void bindPelicula(Pelicula unaPelicula){
             //ImageView -> Necesito utilizar Glide
             Glide.with(itemView)
-                    .load(unaPelicula.getPosterPeliculaUrl())
+                    .load(IMAGEN_BASE_URL+unaPelicula.getPosterPeliculaUrl())
                     .into(imageViewCelda);
             textViewTituloPelicula.setText(unaPelicula.getTituloPelicula());
             textViewSinopsisPelicula.setText(unaPelicula.getSinopsisPelicula());
