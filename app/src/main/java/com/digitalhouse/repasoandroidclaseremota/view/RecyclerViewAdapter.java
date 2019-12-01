@@ -27,8 +27,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.escuchadorCelda = escuchadorCelda;
     }
 
-    public void actualizarLista(List<Pelicula> peliculaList){
-        this.peliculaList = peliculaList;
+    public void agregarPaginaDePeliculas(List<Pelicula> peliculaList){
+        //this.peliculaList = peliculaList; //Ya no quiero que reemplace la lista
+        this.peliculaList.addAll(peliculaList);
         notifyDataSetChanged();
     }
 

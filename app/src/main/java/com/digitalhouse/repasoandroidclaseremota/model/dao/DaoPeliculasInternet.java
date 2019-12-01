@@ -38,9 +38,9 @@ public class DaoPeliculasInternet {
     }
 
     //Método que le permita al dao hacer esa búsqueda
-    public void traerPeliculasDeInternet(final ResultListener<PeliculaContainer> escuchadorDelController){
+    public void traerPeliculasDeInternet(final ResultListener<PeliculaContainer> escuchadorDelController, Integer pagina){
 
-        Call<PeliculaContainer> masPopularesCall = peliculasService.peliculasMasPopulares(API_KEY);
+        Call<PeliculaContainer> masPopularesCall = peliculasService.peliculasMasPopulares(API_KEY,pagina);
 
         masPopularesCall.enqueue(new Callback<PeliculaContainer>() {
             @Override

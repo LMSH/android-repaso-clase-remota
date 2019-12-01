@@ -1,5 +1,6 @@
 package com.digitalhouse.repasoandroidclaseremota.view;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     private RecyclerView recyclerView;
     private List<Pelicula> peliculas;
     private RecyclerViewAdapter recyclerViewAdapter;
+    private PeliculaController peliculaController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.miRecyclerView);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
+        peliculaController = new PeliculaController();
+
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         peliculas = new ArrayList<>();
@@ -50,19 +54,47 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                 new Pelicula("https://hips.hearstapps.com/es.h-cdn.co/fotoes/images/media/imagenes/reportajes/los-20-posters-de-peliculas-mas-creativos/los-idus-de-marzo/7055664-1-esl-ES/LOS-IDUS-DE-MARZO.jpg?resize=480:*","Ryan Gosling","dksdfsfdsffjalkdhfasfhasdjfls"),
                 new Pelicula("https://miro.medium.com/max/1200/1*q1tZGTWwWkIGyScG5pR9vA.jpeg","Moonlight","dkfjadfsdfsdlkdhfasfhasdjfls")));*/
 
-        final PeliculaController peliculaController = new PeliculaController();
+        traerPaginaDePeliculasPopulares();
+
+        recyclerViewAdapter = new RecyclerViewAdapter(peliculas, this);
+
+        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setHasFixedSize(true);
+
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int ultimaPosicionVisible = linearLayoutManager.findLastVisibleItemPosition();
+                int totalDeElementos = recyclerViewAdapter.getItemCount();
+
+                if (ultimaPosicionVisible >= totalDeElementos - 5) {
+                    //Toast.makeText(MainActivity.this, "Llegué al final", Toast.LENGTH_SHORT).show();
+                    traerPaginaDePeliculasPopulares();
+                }
+
+            }
+        });
+
+    }
+
+    private void traerPaginaDePeliculasPopulares() {
         peliculaController.traerPeliculasDeInternet(new ResultListener<PeliculaContainer>() {
             @Override
             public void finish(PeliculaContainer results) {
                 peliculas = results.getListaDePeliculas();
-                recyclerViewAdapter.actualizarLista(peliculas);
+                recyclerViewAdapter.agregarPaginaDePeliculas(peliculas);
+                if (results.getYaNoHayMasPaginas()) {
+                    Toast.makeText(MainActivity.this, "Última página", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
-        recyclerViewAdapter = new RecyclerViewAdapter(peliculas,this);
-
-        recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerView.setHasFixedSize(true);
     }
 
     @Override
@@ -70,12 +102,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         //OBTENEMOS EL ID
         String id = peliculita.getId();
 
-        PeliculaController peliculaController = new PeliculaController();
         peliculaController.traerUnaPeliculaPorId(new ResultListener<Detalle>() {
             @Override
             public void finish(Detalle results) {
                 Toast.makeText(MainActivity.this, results.toString(), Toast.LENGTH_LONG).show();
             }
-        },id);
+        }, id);
     }
 }
