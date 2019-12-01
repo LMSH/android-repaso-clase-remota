@@ -10,16 +10,25 @@ public class Pelicula {
     private String tituloPelicula;
     @SerializedName("overview")
     private String sinopsisPelicula;
+    private String id;
 
-    public Pelicula(String posterPeliculaUrl, String tituloPelicula, String sinopsisPelicula) {
+    public Pelicula(String posterPeliculaUrl, String tituloPelicula, String sinopsisPelicula, String id) {
         this.posterPeliculaUrl = posterPeliculaUrl;
         this.tituloPelicula = tituloPelicula;
         this.sinopsisPelicula = sinopsisPelicula;
+        this.id = id;
     }
 
     public Pelicula() {
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getPosterPeliculaUrl() {
         return posterPeliculaUrl;

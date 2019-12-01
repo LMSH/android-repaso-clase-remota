@@ -9,12 +9,12 @@ import android.widget.Toast;
 
 import com.digitalhouse.repasoandroidclaseremota.R;
 import com.digitalhouse.repasoandroidclaseremota.controller.PeliculaController;
+import com.digitalhouse.repasoandroidclaseremota.model.pojo.Detalle;
 import com.digitalhouse.repasoandroidclaseremota.model.pojo.Pelicula;
 import com.digitalhouse.repasoandroidclaseremota.model.pojo.PeliculaContainer;
 import com.digitalhouse.repasoandroidclaseremota.util.ResultListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.EscuchadorCelda {
@@ -67,6 +67,15 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
     @Override
     public void eligieronUnaCelda(Pelicula peliculita) {
-        Toast.makeText(this, peliculita.getTituloPelicula(), Toast.LENGTH_SHORT).show();
+        //OBTENEMOS EL ID
+        String id = peliculita.getId();
+
+        PeliculaController peliculaController = new PeliculaController();
+        peliculaController.traerUnaPeliculaPorId(new ResultListener<Detalle>() {
+            @Override
+            public void finish(Detalle results) {
+                Toast.makeText(MainActivity.this, results.toString(), Toast.LENGTH_LONG).show();
+            }
+        },id);
     }
 }

@@ -1,5 +1,7 @@
 package com.digitalhouse.repasoandroidclaseremota.model.dao;
 
+import com.digitalhouse.repasoandroidclaseremota.model.pojo.Detalle;
+import com.digitalhouse.repasoandroidclaseremota.model.pojo.Pelicula;
 import com.digitalhouse.repasoandroidclaseremota.model.pojo.PeliculaContainer;
 import com.digitalhouse.repasoandroidclaseremota.util.PeliculasService;
 import com.digitalhouse.repasoandroidclaseremota.util.ResultListener;
@@ -53,5 +55,22 @@ public class DaoPeliculasInternet {
             }
         });
 
+    }
+
+    public void traerUnPeliculaPorId(final ResultListener<Detalle> escuchadorDelController, String idDeLaPelicula){
+        Call<Detalle> detallePelicula = peliculasService.getUnaPelicula(idDeLaPelicula, API_KEY);
+
+        detallePelicula.enqueue(new Callback<Detalle>() {
+            @Override
+            public void onResponse(Call<Detalle> call, Response<Detalle> response) {
+                Detalle body = response.body();
+                escuchadorDelController.finish(body);
+            }
+
+            @Override
+            public void onFailure(Call<Detalle> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }

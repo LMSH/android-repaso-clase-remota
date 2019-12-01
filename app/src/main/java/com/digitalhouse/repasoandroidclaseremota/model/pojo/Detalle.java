@@ -28,4 +28,12 @@ public class Detalle {
     public void setOverview(String overview) {
         this.overview = overview;
     }
+
+    @Override
+    public String toString() {
+        return "Detalle{" +
+                "original_title='" + original_title + '\'' +
+                ", overview='" + overview + '\'' +
+                '}';
+    }
 }

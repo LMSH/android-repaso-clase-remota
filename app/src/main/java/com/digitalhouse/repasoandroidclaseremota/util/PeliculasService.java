@@ -1,6 +1,6 @@
 package com.digitalhouse.repasoandroidclaseremota.util;
 
-import com.digitalhouse.repasoandroidclaseremota.model.pojo.Pelicula;
+import com.digitalhouse.repasoandroidclaseremota.model.pojo.Detalle;
 import com.digitalhouse.repasoandroidclaseremota.model.pojo.PeliculaContainer;
 
 import retrofit2.Call;
@@ -14,6 +14,6 @@ public interface PeliculasService {
     Call<PeliculaContainer> peliculasMasPopulares(@Query("api_key") String apiKey);
 
     @GET("movie/{movie_id}")
-    Call<Pelicula> getUnaPelicula(@Path("movie_id") String idPelicula,
+    Call<Detalle> getUnaPelicula(@Path("movie_id") String idPelicula,
                                   @Query("api_key") String apiKey);
 }
